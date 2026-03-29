@@ -1,52 +1,58 @@
+'use client';
+
+import { useState } from 'react';
+
 export default function ContactForm() {
+  const [status, setStatus] = useState('idle');
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setStatus('submitting');
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('/__forms.html', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      });
+
+      if (!response.ok) {
+        throw new Error('Form submission failed');
+      }
+
+      setStatus('success');
+      window.location.href = '/thanks';
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+    }
+  }
+
   return (
     <form
-      className="form card"
       name="quote-request"
-      method="POST"
+      onSubmit={handleSubmit}
       data-netlify="true"
-      data-netlify-honeypot="bot-field"
-      action="/thanks"
+      netlify-honeypot="bot-field"
     >
       <input type="hidden" name="form-name" value="quote-request" />
-      <p className="hidden-field">
-        <label>
-          Don&apos;t fill this out if you&apos;re human: <input name="bot-field" />
-        </label>
-      </p>
-      <div className="field-grid two-up">
-        <label>
-          Name
-          <input type="text" name="name" required />
-        </label>
-        <label>
-          Email
-          <input type="email" name="email" required />
-        </label>
-      </div>
-      <div className="field-grid two-up">
-        <label>
-          Phone
-          <input type="tel" name="phone" />
-        </label>
-        <label>
-          ZIP Code
-          <input type="text" name="zipCode" />
-        </label>
-      </div>
-      <label>
-        Service needed
-        <input type="text" name="service" placeholder="Drywall repair, painting, fixture install..." />
-      </label>
-      <label>
-        Preferred timing
-        <input type="text" name="timing" placeholder="This week, next month, flexible, etc." />
-      </label>
-      <label>
-        Project details
-        <textarea name="message" rows="6" required placeholder="Describe the job, timeline, and anything important for the estimate." />
-      </label>
-      <button type="submit" className="button primary">Send quote request</button>
+      <input type="hidden" name="bot-field" />
+
+      <input name="name" type="text" placeholder="Your name" required />
+      <input name="email" type="email" placeholder="Your email" required />
+      <input name="phone" type="tel" placeholder="Phone number" required />
+      <input name="service" type="text" placeholder="Service needed" />
+      <input name="address" type="text" placeholder="Project address" />
+      <textarea name="details" placeholder="Tell us about the job" required />
+
+      <button type="submit" disabled={status === 'submitting'}>
+        {status === 'submitting' ? 'Sending...' : 'Request Quote'}
+      </button>
+
+      {status === 'error' && <p>Something went wrong. Please try again.</p>}
     </form>
   );
 }
