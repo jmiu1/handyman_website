@@ -1,20 +1,8 @@
 export const testimonials = [
   {
-    name: 'Sarah M.',
-    location: 'Westminster, MD',
-    rating: 5,
-    quote: 'Very responsive, showed up on time, and the finished work looked clean and professional.'
-  },
-  {
-    name: 'David R.',
+    name: 'Jake M.',
     location: 'Eldersburg, MD',
     rating: 5,
-    quote: 'We had several small jobs around the house and everything was handled quickly and carefully.'
-  },
-  {
-    name: 'Angela T.',
-    location: 'Sykesville, MD',
-    rating: 5,
-    quote: 'Clear communication, fair quote, and excellent attention to detail. We would absolutely hire again.'
+    quote: 'Will upgraded my deck and swapped out a toilet. While working, he found the previous homeowner had punctured a water pipe when putting in custom boards, so Will replaced the problematic piping too! Very responsive, showed up on time, and the finished work looked clean and professional.'
   }
 ];
