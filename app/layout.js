@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Your Handyman Company',
-  description: 'Reliable handyman services with quality workmanship, photo gallery, reviews, and fast quote requests.'
+  title: 'Professional Home Improvement & Remodeling Services',
+  description: 'High-quality home improvement services including bathroom upgrades, kitchen updates, tile work, and finish carpentry. View our work and request a fast quote today.'
 };
 
 export default function RootLayout({ children }) {
